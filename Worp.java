@@ -5,7 +5,10 @@ public class Worp {
 	int[] worp = new int[5];
 
 	void worpuitslag(int[] uitslag) {
-		System.out.println("Dit is de worparray:" + Arrays.toString(uitslag));
+		for (int a : uitslag) {
+			System.out.print(a + "	"); // toon de worp
+		}
+
 		if (nummersvergelijken(uitslag) == true) {
 			System.out.println("Hoera je hebt Yahtzee gegooid! Het spel is nu afgelopen.");
 			System.exit(0); // spel is beëindigd
@@ -22,55 +25,62 @@ public class Worp {
 		return true;
 	}
 
-	void vasthouden(int[] blokkeerarray) {
+	void vasthouden(int[] blokkeerarray, Speler actievespeler) {
 		Arrays.fill(blokkeerarray, 0); // leegmaken,zodat het bij iedere worp weer vers is.
 		System.out.println("Wat wil je vasthouden? (Bijv: 123)");
 		Scanner scanner = new Scanner(System.in);
 		String input = scanner.nextLine();
-			if (!checkinvoer(input))
-			{
+
+		if (input.equals("") == false) { // een enter laat de charAt crashen
+			switch (input.charAt(0)) {
+			case 'q':
+			case 'Q':
+				System.out.println("Je hebt q ingevoerd. Het spel wordt nu afgesloten.");
+				System.exit(0);
+				break;
+			case 'g':
+			case 'G':
+				System.out.println("Je hebt G ingevoerd. Hieronder is de geschiedenis van je worpen:");
+				actievespeler.geschiedenis();
+				break;
+			}
+			if (checkinvoer(input) != "") {
+				System.out.println(checkinvoer(input) + " Probeer het opnieuw:");
 				input = scanner.nextLine();
 			}
+		}
+
 		for (int i = 0; i < input.length(); i++) {
 			char ch = input.charAt(i);
 			int temp = Character.getNumericValue(ch);
 			int dobbelnummer = temp - 1; // als je 1 opgeeft,moet hij naar arrayplek 0
 			blokkeerarray[dobbelnummer] = 1;
-			System.out.println(Arrays.toString(blokkeerarray));
+
+			// DEBUGGING - toon array:
+			// System.out.println(Arrays.toString(blokkeerarray));
 
 		}
+
 	}
 
-	boolean checkinvoer(String input) {
+	String checkinvoer(String input) {
+		String foutmelding = "";
 		if (input.length() > 5) {
-			System.out.println("Je hebt meer dan vijf tekens ingevoerd. Probeer opnieuw");
-			return false;
+			foutmelding = "Je hebt meer dan vijf tekens ingevoerd.";
+
 		}
-		if (input.length() > 0) {
-			switch (input.charAt(0)) {	
-			case 'q':
-			case 'Q':
-			System.out.println("Je hebt q ingevoerd. Het spel wordt nu afgesloten.");
-			System.exit(0);
-			 break;
-			case 'g':
-			case 'G':
-			System.out.println("Je hebt G ingevoerd. Toon geschiedenis");
-			  break;
-			}
-			for (int i=0; i < input.length(); i++) {
-				int a = Character.getNumericValue(input.charAt(i));  
-				if (a > 5)
-				{
-					System.out.println("Je hebt een dobbelsteen ingevuld die niet bestaat. (Invoer groter dan 5)");
-					return false;
+		if (!input.chars().allMatch(Character::isDigit)) {
+			foutmelding = "Voer getallen in om de dobbelstenen vast te zetten";
+		} else if (input.length() > 0) {
+			for (int i = 0; i < input.length(); i++) {
+				int a = Character.getNumericValue(input.charAt(i));
+				if (a > 5) {
+					foutmelding = "Je hebt een dobbelsteen ingevuld die niet bestaat. (Invoer groter dan 5)";
+
 				}
 			}
-			return true;
-			
-		} else {
-			return true;
-		}
 
+		}
+		return foutmelding;
 	}
 }
