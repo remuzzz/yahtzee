@@ -58,6 +58,14 @@ public class Worp {
 			System.out.println("Je hebt G ingevoerd. Toon geschiedenis");
 			  break;
 			}
+			for (int i=0; i < input.length(); i++) {
+				int a = Character.getNumericValue(input.charAt(i));  
+				if (a > 5)
+				{
+					System.out.println("Je hebt een dobbelsteen ingevuld die niet bestaat. (Invoer groter dan 5)");
+					return false;
+				}
+			}
 			return true;
 			
 		} else {

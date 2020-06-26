@@ -12,6 +12,5 @@ Boolean active;
 		System.out.println("Dit is je geschiedenis:"+Arrays.deepToString(worpgeschiedenis));
 	}
 	
-	
 }
 
