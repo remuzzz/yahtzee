@@ -47,7 +47,7 @@ class YahtzeeSpel {
 	void spelen() {
 		System.out.println("Welkom bij Yahtzee. Je mag vijf keer achter elkaar gooien en hebt gewonnen als "
 				+ "alle vijf de dobbelstenen hetzelfde zijn. ");
-		System.out.println("Druk op Enter om te gooien, of Q om te eindigen.");
+		System.out.println("Druk op Enter om te gooien, Q om te eindigen en G om je worpgeschiedenis te bekijken.");
 
 		Scanner scanner = new Scanner(System.in);
 		String input = scanner.nextLine();
@@ -61,9 +61,10 @@ class YahtzeeSpel {
 			int y = -1; // aantal beurten gegooid, i = aantal dobbelstenen gegooid per beurt
 			boolean result = false;
 			while (!result) {
-				System.out.print("Actieve user:");
-				Speler actievespeler = spelersoverzicht.get(actievespelerid);
-				System.out.println(actievespeler.naam);
+
+				Speler actievespeler = spelersoverzicht.get(actievespelerid); // haal de actieve speler op uit arraylist
+																				// met spelers
+
 				y++;
 				int beurt = (y + 1); // omdat de array begint met 0, en de beurt met 1
 				int i = -1; // i moet bij de eerste worp 0 zijn in de for-loop.
@@ -84,11 +85,9 @@ class YahtzeeSpel {
 				worp.worpuitslag(worp.worp); // toon worpuitslag en check yahtzee
 				System.out.println(""); // nieuwe regel eronder
 
-				// CHECKS VOOR DEBUGGING:
-				// actievespeler.geschiedenis(); // toon worp geschiedenis
-
 				if (beurt % 5 == 0) { // volgende speler aan de beurt
 					spelerswissel(beurt, actievespelerid);
+					input = scanner.nextLine(); // Nieuwe speler, betekent opnieuw gooien.
 
 				} else {
 					worp.vasthouden(blokkeerarray, actievespeler); // vasthouden laten zien
@@ -102,14 +101,19 @@ class YahtzeeSpel {
 
 		int aantalspelers = spelersoverzicht.size();
 
-		if (actievespelerid + 1 == aantalspelers) { // array begint altijd bij 0 vandaar +1
-			actievespelerid = 0; // begin weer bij de eerste speler
-		} else {
-			actievespelerid++;
+		if (aantalspelers > 1) { // alleen wisselen bij meerdere spelers
+			if (actievespelerid + 1 == aantalspelers) { // array begint altijd bij 0 vandaar +1
+				actievespelerid = 0; // begin weer bij de eerste speler
+				
+			} else {
+				actievespelerid++;
+			
+			}
+			Speler actievespeler = spelersoverzicht.get(actievespelerid);
+			Arrays.fill(blokkeerarray, 0); // blokkeerarray leegmaken
+			System.out.println(">>>>> BEURTWISSEL <<<<<");
+			System.out.println(">>>>> De volgende speler is aan de beurt: " + actievespeler.naam + ". Werp met Enter.");
 		}
-		Speler actievespeler = spelersoverzicht.get(actievespelerid);
-		System.out.println(">>>>>De volgende speler is aan de beurt: " + actievespeler.naam);
-
 	}
 
 }

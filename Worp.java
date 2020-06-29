@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -10,12 +11,12 @@ public class Worp {
 		}
 
 		if (nummersvergelijken(uitslag) == true) {
-			System.out.println("Hoera je hebt Yahtzee gegooid! Het spel is nu afgelopen.");
+			System.out.println(">>>> Hoera je hebt Yahtzee gegooid! Het spel is nu afgelopen. <<<<");
 			System.exit(0); // spel is beëindigd
 		}
 	}
 
-	public static boolean nummersvergelijken(int[] a) {
+	public static boolean nummersvergelijken(int[] a) { // wordt true als alle nummers hetzelfde zijn
 		for (int i = 0; i < a.length; i++) {
 			if (a[0] != a[i]) {
 				return false;
@@ -26,12 +27,12 @@ public class Worp {
 	}
 
 	void vasthouden(int[] blokkeerarray, Speler actievespeler) {
-		Arrays.fill(blokkeerarray, 0); // leegmaken,zodat het bij iedere worp weer vers is.
-		System.out.println("Wat wil je vasthouden? (Bijv: 123)");
+		Arrays.fill(blokkeerarray, 0); // leegmaken,zodat het bij iedere worp weer vers 0 is.
+		System.out.println("Welke dobbelstenen wil je vasthouden? (Bijv: 123)");
 		Scanner scanner = new Scanner(System.in);
 		String input = scanner.nextLine();
 
-		if (input.equals("") == false) { // een enter laat de charAt crashen
+		if (input.equals("") == false) { // een enter laat de charAt crashen,vandaar deze check
 			switch (input.charAt(0)) {
 			case 'q':
 			case 'Q':
@@ -44,7 +45,7 @@ public class Worp {
 				actievespeler.geschiedenis();
 				break;
 			}
-			if (checkinvoer(input) != "") {
+			while (checkinvoer(input) != "") {
 				System.out.println(checkinvoer(input) + " Probeer het opnieuw:");
 				input = scanner.nextLine();
 			}
@@ -55,10 +56,6 @@ public class Worp {
 			int temp = Character.getNumericValue(ch);
 			int dobbelnummer = temp - 1; // als je 1 opgeeft,moet hij naar arrayplek 0
 			blokkeerarray[dobbelnummer] = 1;
-
-			// DEBUGGING - toon array:
-			// System.out.println(Arrays.toString(blokkeerarray));
-
 		}
 
 	}
@@ -67,16 +64,14 @@ public class Worp {
 		String foutmelding = "";
 		if (input.length() > 5) {
 			foutmelding = "Je hebt meer dan vijf tekens ingevoerd.";
-
 		}
 		if (!input.chars().allMatch(Character::isDigit)) {
-			foutmelding = "Voer getallen in om de dobbelstenen vast te zetten";
+			foutmelding = "Je hebt een letter of ander teken ingevoerd. Voer getallen in om de dobbelstenen vast te zetten.";
 		} else if (input.length() > 0) {
 			for (int i = 0; i < input.length(); i++) {
 				int a = Character.getNumericValue(input.charAt(i));
 				if (a > 5) {
-					foutmelding = "Je hebt een dobbelsteen ingevuld die niet bestaat. (Invoer groter dan 5)";
-
+					foutmelding = "Je hebt een dobbelsteen ingevuld die niet bestaat. Je invoer was groter dan 5.";
 				}
 			}
 

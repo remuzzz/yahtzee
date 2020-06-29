@@ -1,14 +1,14 @@
 import java.util.Arrays;
 import java.util.Random;
 
-public class Dobbelsteen {	
+public class Dobbelsteen {
 	int waarde;
 
-		int werpen() {
+	int werpen() {
 		Random random = new Random();
-		int a = random.nextInt(6)+1;
+		int a = random.nextInt(6) + 1;
 		waarde = a;
 		return a;
-		
-		}
+
+	}
 }
