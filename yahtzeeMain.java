@@ -62,8 +62,7 @@ class YahtzeeSpel {
 			boolean result = false;
 			while (!result) {
 
-				Speler actievespeler = spelersoverzicht.get(actievespelerid); // haal de actieve speler op uit arraylist
-																				// met spelers
+				Speler actievespeler = spelersoverzicht.get(actievespelerid); // haal de actieve speler op uit arraylist met spelers
 
 				y++;
 				int beurt = (y + 1); // omdat de array begint met 0, en de beurt met 1
