@@ -45,7 +45,7 @@ class YahtzeeSpel {
 	}
 
 	void spelen() {
-		System.out.println("Welkom bij Yahtzee. Je mag vijf keer achter elkaar gooien en hebt gewonnen als "
+		System.out.println("Welkom bij Yahtzee. Je mag drie keer achter elkaar gooien en hebt gewonnen als "
 				+ "alle vijf de dobbelstenen hetzelfde zijn. ");
 		System.out.println("Druk op Enter om te gooien, Q om te eindigen en G om je worpgeschiedenis te bekijken.");
 
@@ -85,7 +85,7 @@ class YahtzeeSpel {
 				worp.worpuitslag(worp.worp); // toon worpuitslag en check yahtzee
 				System.out.println(""); // nieuwe regel eronder
 
-				if (beurt % 5 == 0) { // volgende speler aan de beurt
+				if (beurt % 3 == 0) { // volgende speler aan de beurt
 					spelerswissel(beurt, actievespelerid);
 					input = scanner.nextLine(); // Nieuwe speler, betekent opnieuw gooien.
 
